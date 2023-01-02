@@ -13,7 +13,7 @@
   "author": "yihsin9111 <b10901121@ntu.edu.tw>",
   "license": "MIT",
   "scripts": {
-    "install:prod":"cd frontend&& yarn install --freeze-lockfile&& cd ../backend&& yarn install --freeze-lockfile",
+    "install:prod":"cd \"frontend\" && yarn install --freeze-lockfile && cd \"../backend\" && yarn install --freeze-lockfile",
     "build":"cd frontend && yarn build",
     "deploy":"cd backend && yarn deploy"
   }
