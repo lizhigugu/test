@@ -6,7 +6,7 @@ COPY . /package.json
 /package.json
 
 RUN corepack enable
-RUN yarn install:prod
+RUN npm install:prod
 RUN yarn build
 
 CMD ["yarn", "deploy"]
