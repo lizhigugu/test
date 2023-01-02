@@ -1,7 +1,13 @@
 <<<<<<< HEAD
-/node_modules
-/yarn.lock
-
+package.json
+yarn.lock
+package-lock.json
+.DS_Store
+*/package.json
+*/node_modules
+*/yarn.lock
+*/package-lock.json
+*/.DS_Store
 =======
 /node_modules
 >>>>>>> 59c556a (bar and side menu)
