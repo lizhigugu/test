@@ -5,7 +5,7 @@ EXPOSE ${PORT}
 COPY . /package.json /package.json
 
 RUN corepack enable
-RUN npm install
+RUN yarn install
 RUN yarn build
 
 CMD ["yarn", "deploy"]
