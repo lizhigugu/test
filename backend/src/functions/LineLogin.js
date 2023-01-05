@@ -9,10 +9,9 @@ const sendData = (data, ws) =>{
     //console.log('send data called in getFunc.');
 }
 
-const loginLine = async (input, ws) => {
+const loginLine = (input, ws) => {
     console.log("in loginLine");
-
-    const fb= async (callback)=>{
+    const fb = async (callback)=>{
         const feedback = await axios({
             method: 'post',
             url: 'https://api.line.me/oauth2/v2.1/token',
