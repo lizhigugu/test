@@ -89,8 +89,9 @@ const Login = () => {
             // setTimeout(function(){
                 //     console.log("e500");
                 // }, 1000);
-            await loginLine(value.code)
+            
             const value = qs.parse(info.search, { ignoreQueryPrefix: true });
+            await loginLine(value.code)
             console.log("LoginLine Complete: ", value)
             setifsend(true);
         }
