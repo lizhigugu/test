@@ -82,8 +82,13 @@ const Login = () => {
         
     }
 
+    function delay(time){
+        return new Promise(resolve => setTimeout(resolve,time))
+    }
+
     useEffect(()=>{
         console.log("info: ", info)
+        delay(2000).then(()=>console.log("ran after 2 second"))
         if(info.search && !ifsend){
             setTimeout(function(){
                 console.log("e500");
