@@ -2,7 +2,8 @@ FROM node:16-alpine
 
 EXPOSE ${PORT}
 
-COPY . /package.json /package.json/
+COPY . /app
+WORKDIR /app
 
 RUN corepack enable
 RUN yarn install:prod

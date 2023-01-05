@@ -3,7 +3,6 @@
 //mui import 
 import { ListItem, ListItemText, IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 
 //test data import 
 
@@ -20,9 +19,6 @@ const ProductinCat = ({item,ind}) => {
     const {DeleteProduct} = useBackend();
 
     //function defince
-    const handleModify = () => {
-        console.log("product handle modify")
-    }
 
     const handleDelete = () => {
         console.log("product handle delete");

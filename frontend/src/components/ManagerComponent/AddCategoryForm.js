@@ -70,12 +70,11 @@ const AddCategoryForm = () => {
             >
            <PostAdd />
         </IconButton>
-        {/* <Button variant="contained" onClick={()=>{setOpen(true)}}>增新商品種類</Button> */}
         <Dialog 
             open={open} 
             onClose={()=>{Cancel()}}
             fullWidth={true}>
-            <DialogTitle>增新商品種類</DialogTitle>
+            <DialogTitle>新增商品種類</DialogTitle>
             <DialogContent sx={{
                 display: "grid",
                 gap: 1.5
@@ -101,7 +100,9 @@ const AddCategoryForm = () => {
             </DialogContent>
             <DialogActions>
             <Button onClick={()=>{Cancel()}}>取消</Button>
-            <Button onClick={()=>{onAddCategory()}}>增新</Button>
+            <Button 
+                disabled={!name || !date}
+                onClick={()=>{onAddCategory()}}>新增商品種類</Button>
             </DialogActions>
         </Dialog>
         </Box>

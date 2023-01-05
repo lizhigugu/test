@@ -1,17 +1,17 @@
 //react import
 
 //mui import
-import { List, ListItemText, ListItem } from "@mui/material";
+import { List} from "@mui/material";
 
 //component import 
 import CategoryListItem from "./CategoryListItem";
 
 //testData import 
-import Category from "../../test datas/Category";
+// import Category from "../../test datas/Category";
 
 //hooks import
-import { useEffect, useState } from 'react'
-import useBackend from "../../containers/hooks/useBackend";
+import { useState } from 'react'
+// import useBackend from "../../containers/hooks/useBackend";
 import { useWebsite } from "../../containers/hooks/WebsiteContext";
 
 const CategoryList = () => {

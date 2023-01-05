@@ -1,14 +1,13 @@
 const request = require('request');
 const cheerio = require('cheerio');
-const async = require('async');
 
 const sendData = (data, ws) =>{
     ws.send(JSON.stringify(data));
-    console.log('send data called in getFunc.');
+    //console.log('send data called in getFunc.');
 }
 
 const getStores = (city, ws) => {
-  console.log(city)
+  //console.log(city)
   var options = {
     url: 'https://www.ibon.com.tw/retail_inquiry_ajax.aspx',
     method: 'POST',
@@ -26,7 +25,7 @@ const getStores = (city, ws) => {
         address: $(obj).find('td').eq(2).text().trim(),
       }
     }).get()
-    console.log(stores)
+    //console.log(stores)
     let a =[]
     stores.map((item, index)=>{
         if(index!=0){

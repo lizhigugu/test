@@ -8,7 +8,7 @@ import StepLabel from '@mui/material/StepLabel';
 
 //const define
 const steps_cash=[
-    "請至購物車點選結帳以確認帳單",
+    "訂單已確認",
     "訂單處理中",
     "購買完成 or 取消訂單",
     "官方出貨中",
@@ -16,10 +16,17 @@ const steps_cash=[
 ]
 
 const steps_card=[
-    "請至購物車點選結帳以確認帳單",
     "訂單處理中",
     "購買完成 or 取消訂單",
     "匯款已成功對帳",
+    "官方出貨中",
+    "已出貨"
+]
+
+const steps_manager=[
+    "訂單已確認",
+    "訂單處理中",
+    "購買完成 or 取消訂單",
     "官方出貨中",
     "已出貨"
 ]
@@ -31,7 +38,10 @@ const TimeLine = ({status, payment}) => {
     //function define
 
     //const define
-    const steps= (payment === "刷卡")? steps_card:steps_cash
+    let steps= (payment === "匯款")? steps_card:steps_cash
+    if(payment === "manager"){
+        steps=steps_manager
+    }
 
 
     //return

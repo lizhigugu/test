@@ -13,7 +13,7 @@ import ProductinCat from "./ProductsinCategory";
 import UpdateCategoryForm from "./UpdateCategoryForm";
 
 //test data improt 
-import Products from "../../test datas/Products";
+// import Products from "../../test datas/Products";
 
 //import hooks
 import { useEffect } from 'react'
@@ -38,9 +38,6 @@ const CategoryListItem = ({item, ind, atwhich, setAtwhich}) =>{
     },[categories])
 
     //function define
-    const handleModify = () => {
-        console.log("handlemodify");
-    }
 
     const handleDelete = () => {
         console.log("handle Delete");
@@ -84,7 +81,7 @@ const CategoryListItem = ({item, ind, atwhich, setAtwhich}) =>{
                 >
                     <DeleteIcon/>
                 </IconButton>
-                {open? <AddProductForm />:<></>}
+                {open? <AddProductForm category={item} />:<></>}
             </ListItem>
             {open? 
             <Box sx={{width: "100%"}}>

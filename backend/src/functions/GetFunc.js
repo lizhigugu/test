@@ -5,18 +5,24 @@ import ProductModel from '../models/Product'
 
 const sendData = (data, ws) =>{
     ws.send(JSON.stringify(data));
-    console.log('send data called in getFunc.');
+    // console.log('send data called in getFunc.');
 }
 
 const GetCategories = async(ws)=>{
     const categories = await CategoryModel.aggregate([
         { $group: { _id: null, category_names: { $push: "$name" } } }])
-    sendData(["categories",categories[0].category_names],ws);
-    
+    // console.log("get categories: ", categories.length);
+    if(categories){
+        sendData(["categories",categories[0].category_names],ws);
+    }
+
     //send category deadlines
     const deadlines = await CategoryModel.aggregate([
         { $group: { _id: null, category_dl:{ $push:"$deadline" }}}])
-    sendData(["deadlines",deadlines[0].category_dl],ws);
+    if(categories){
+        sendData(["deadlines",deadlines[0].category_dl],ws);
+        }
+    
 }
 
 const GetProductsByCategory = async(category, ws)=>{
@@ -32,24 +38,32 @@ const GetProductsByCategory = async(category, ws)=>{
     //sendData(["products",obj[0].products],ws);
 }
 
-const GetUserData = async(userLineId, ws)=>{
-    UserModel.find({userLineId:userLineId}, async function(err, obj){
+const GetUserData = async (userLineId, ws)=>{
+    console.log("get user data");
+    let ifin = false
+    UserModel.find({lineId:userLineId}, async function(err, obj){
         if(obj.length){
+            ifin = true;
+            // console.log("userData: ", obj[0]);
             sendData(["userData",obj[0]], ws);
             sendData(["userAvaliable", true], ws);
+            console.log("true!");
+            
         }
         else{
-            console.log("user not found ;_;");
+            // console.log("user not found ;_;");
             sendData(["userAvaliable", false], ws);
+            console.log("false!");
         }
     })
+    return ifin;
 }
 
 const GetUserBill = async(userLineId, ws)=>{
     let query = userLineId==='all'? {}:{userLineId}
     BillModel.find(query, async function(err, obj){
         if(obj.length){
-            console.log('in get user bill', obj);
+            // console.log('in get user bill', obj);
             sendData(["userBill",obj],ws);
         }
         else{
@@ -69,4 +83,18 @@ const GetBill = async(billId, ws)=>{
     })
 }
 
-export {GetCategories, GetProductsByCategory, GetUserData, GetUserBill, GetBill}
+//new function
+
+const GetCatBill = async (category, ws) => {
+    BillModel.find({category: category}, async function(err, obj){
+        // console.log("bill of catrgory: ", obj)
+        sendData(["userBill", obj], ws)
+    })
+
+    CategoryModel.find({name: category}, async function (err, obj){
+        // console.log("category: ", obj[0]);
+        sendData(["GetCatStatus", obj[0].status], ws);
+    })
+}
+
+export {GetCategories, GetProductsByCategory, GetUserData, GetUserBill, GetBill, GetCatBill}

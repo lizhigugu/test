@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 
 const CategorySchema = Schema({
     name:       { type: String, required: true },
+    status:     {type: Number, required: true},
     deadline:   { type: Date },
     products:   [{type: String}],
 }, {

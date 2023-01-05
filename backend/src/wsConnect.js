@@ -1,14 +1,17 @@
 import { AddUser ,AddBillToUser, AddCategory, AddProductToCategory, AddItemToBill, ConfirmBill } from './functions/AddFunc'
-import { UpdateUser, UpdateBillStatus, UpdateCategory, UpdateProduct } from './functions/UpdateFunc'
-import { GetCategories, GetProductsByCategory, GetUserData, GetUserBill, GetBill } from './functions/GetFunc';
+import { UpdateUser, UpdateBillStatus, UpdateCategory, UpdateProduct, UpdateItem, UpdateCategoryStatus } from './functions/UpdateFunc'
+import { GetCategories, GetProductsByCategory, GetUserData, GetUserBill, GetBill, GetCatBill } from './functions/GetFunc';
 import { DeleteBill, DeleteCategory, DeleteUser, DeleteProduct, DeleteItemFromBill } from './functions/DeleteFunc'
+import { AddItemToTBill, renewTBill, getTBill, DeleteItemFromTBill } from './functions/TemporaryBillFunc';
 import { getStores } from './functions/711Func';
+import { AddSequenceList } from './functions/SequenceListFunc';
+import { loginLine } from './functions/LineLogin';
 
 //helper functions
-const sendData = (data, ws) =>{
-    ws.send(JSON.stringify(data));
-    console.log('send data called. (in wsConnect.js, line 5)');
-}
+// const sendData = (data, ws) =>{
+//     ws.send(JSON.stringify(data));
+//     console.log('send data called. (in wsConnect.js, line 5)');
+// }
 
 export default {
     initData: (ws) => {
@@ -19,7 +22,7 @@ export default {
         switch (task) {
             //Add functions
             case 'AddUser':{
-                AddUser(payload);
+                AddUser(payload, ws);
                 break;
             }
             case 'AddCategory':{
@@ -31,7 +34,7 @@ export default {
                 break;
             }
             case 'AddBillToUser':{
-                AddBillToUser(payload,ws);
+                AddBillToUser(payload.lineId, payload.billId,ws);
                 break;
             }
             case 'AddItemToBill':{
@@ -42,8 +45,8 @@ export default {
 
             //Confirm functions
             case 'ConfirmBill':{
-                ConfirmBill(payload,ws);
-                GetBill(payload.billId,ws);
+                ConfirmBill(payload.BillInfo, payload.lineId,ws);
+                GetBill(payload.BillInfo.billId, ws);
                 break;
             }
 
@@ -71,7 +74,7 @@ export default {
 
             //Update functions
             case 'UpdateUser':{
-                UpdateUser(payload);
+                UpdateUser(payload, ws);
                 break;
             }
             case 'UpdateCategory':{
@@ -79,7 +82,7 @@ export default {
                 break;
             } 
             case 'UpdateProduct':{
-                UpdateProduct(payload,ws);
+                UpdateProduct(payload, ws);
                 break;
             }
             case 'UpdateBillStatus':{
@@ -87,10 +90,15 @@ export default {
                 GetUserBill('all',ws);
                 break;
             }
+            case "UpdateItem":{
+                UpdateItem(payload,ws);
+                GetBill(payload.id,ws);
+                break;
+            }
 
             //delete functions
             case 'DeleteUser':{
-                DeleteUser(payload);
+                DeleteUser(payload, ws);
                 break;
             }
             case 'DeleteCategory':{
@@ -113,6 +121,47 @@ export default {
                 getStores(payload,ws);
                 break;
             }
+            case "renewTBill":{
+                renewTBill(payload, ws);
+                break;
+            }
+            case "AddItemToTBill":{
+                AddItemToTBill(payload.lineId, payload.item, ws);
+                console.log("test",payload.item)
+                break;
+            }
+            case "getTBill":{
+                getTBill(payload, ws);
+                console.log("test",payload)
+                break;
+            }
+            
+            case "DeleteItemFromTBill":{
+                DeleteItemFromTBill(payload, ws);
+                break;
+            }
+            //SequenceList
+            case "AddSequenceList":{
+                AddSequenceList(payload, ws);
+                break;
+            }
+
+            case "GetCatBill": {
+                GetCatBill(payload, ws);
+                break;
+            }
+
+            case "UpdateCategoryStatus":{
+                UpdateCategoryStatus(payload, ws);
+                break;
+            }
+
+            case "loginLine":{
+                console.log("here");
+                loginLine(payload, ws);
+                break;
+            }
+
         }
     }
 }

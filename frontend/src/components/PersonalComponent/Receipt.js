@@ -25,6 +25,7 @@ const Receipt = ({item}) => {
             <TableCell align="right">選項</TableCell>
             <TableCell align="right">備註</TableCell>
             <TableCell align="right">數量</TableCell>
+            <TableCell align="right">type</TableCell>
             <TableCell align="right">單價</TableCell>
           </TableRow>
         </TableHead>
@@ -40,6 +41,7 @@ const Receipt = ({item}) => {
               <TableCell align="right">{product.option}</TableCell>
               <TableCell align="right">{product.note}</TableCell>
               <TableCell align="right">{product.number}</TableCell>
+              <TableCell align="right">{product.product_type}</TableCell>
               <TableCell align="right">{product.price}</TableCell>
             </TableRow>
           ))}

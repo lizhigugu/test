@@ -10,7 +10,7 @@ import ModifyBills from "../components/ManagerComponent/ModifyBills";
 
 
 //router import
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 //hooks import
 import { useEffect } from 'react';
@@ -22,14 +22,13 @@ import { useWebsite } from "../containers/hooks/WebsiteContext";
 const ManagerPage = () => {
     
     //fetch backend data
-    const {GetUserBill} = useBackend();
-    const {UserBill} = useWebsite();
+    const {GetCatBill} = useBackend();
+    const {UserBill, categories} = useWebsite();
 
     useEffect(()=>{
-        GetUserBill('all');
+        GetCatBill(categories[0]);
     },[])
     useEffect(()=>{
-        GetUserBill('all');
     },[UserBill])
 
     //set state
@@ -59,11 +58,9 @@ const ManagerPage = () => {
             <Stack direction="row" spacing={1}>
                 <Chip label="商品管理" variant="outlined" onClick={()=>{handleClick(0)}} />
                 <Chip label="訂單管理" variant="outlined" onClick={()=>{handleClick(1)}} />
-                <Chip label="買家管理" variant="outlined" onClick={()=>{handleClick(2)}} />
             </Stack>
             {open[0]? <ModifyProduct />:<></>}
             {open[1]? <ModifyBills />:<></>}
-            {open[2]? <div>Not Yet</div>:<></>}
         </Box>
     )
 }

@@ -1,18 +1,19 @@
 // mui import 
 import MuiAppBar from '@mui/material/AppBar';
-import {styled, useTheme } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
-import { Dialog } from '@mui/material';
+import { Dialog, Badge } from '@mui/material';
+import theme1 from '../../theme';
+import { ThemeProvider } from '@emotion/react';
 
 // mui icon import
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 // react import
 import {useState, Fragment, useEffect } from "react";
@@ -20,12 +21,12 @@ import {useState, Fragment, useEffect } from "react";
 // Component Import 
 import BarDrawer from './barDrawer';
 import { drawerWidth } from './BarConstDef';
-import CartList from '../CartList';
 import CartInclude from './CartItem';
 
 //hooks import
 import { useWebsite } from '../../containers/hooks/WebsiteContext';
 import useBackend from '../../containers/hooks/useBackend';
+import { useNavigate } from 'react-router-dom';
 
 // styled component
 const AppBar = styled(MuiAppBar, {
@@ -48,22 +49,35 @@ const AppBar = styled(MuiAppBar, {
 // functional component
 const NavBar = ({open, setOpen}) => {
     // set state
-    const [anchorEl, setAnchorEl] = useState(null);
     const [openCart, setOpenCart] = useState(false);
+    const [badgeNum, setBadgeNum] = useState(0);
     
     //advoid undefined list of items rendered.
-    const { bill, currentBillId } = useWebsite();
-    const { GetBill } = useBackend();
+    const { bill, currentBillId, iflog, userLineId, setIflog, setIsManager } = useWebsite();
+    const { GetBill, getTBill } = useBackend();
 
     // set theme
-    const theme = useTheme();
+
+    //set navigate
+    const navigate = useNavigate();
 
     useEffect(()=>{
       GetBill(currentBillId);
     },[])
+
+    useEffect(()=>{
+      if(iflog && bill.ItemList){
+        setBadgeNum(bill.ItemList.length);
+      }
+      else{
+        setBadgeNum(0);
+      }
+      // console.log("rerender");
+      // console.log("bill length: ", bill.items.length);
+    },[bill]);
     
     const handleCart = async() => {
-      await GetBill(currentBillId);
+      await getTBill(userLineId);
       setOpenCart(true);
       console.log("open cart", bill, bill.length);
     };
@@ -72,14 +86,19 @@ const NavBar = ({open, setOpen}) => {
         setOpen(!open);
     }
     
-    const handleClose = () => {
-        setOpen(false);
+    const handleLogin = () => {
+      if(!iflog){
+        navigate("/login")
+      }
+      else{
+        navigate("/personal")
+      }
     }
     
     return (
-      <>
+      <ThemeProvider theme={theme1}>
       <Box sx={{ flexGrow: 0 }}>
-        <AppBar position="static" style={{ background: '#b0bec5' }} open={open}>
+        <AppBar position="static" theme={theme1} open={open}>
           <Toolbar>
             <IconButton
               size="large"
@@ -88,6 +107,7 @@ const NavBar = ({open, setOpen}) => {
               aria-label="menu"
               sx={{ mr: 2 }}
               onClick={(e)=>{handleDrawer()}}
+              disabled={!iflog}
             >
               <MenuIcon />
             </IconButton>
@@ -102,8 +122,13 @@ const NavBar = ({open, setOpen}) => {
                     aria-haspopup="true"
                     onClick={()=>{handleCart()}}
                     color="inherit"
+                    disabled={!iflog}
                   >
-                    <ShoppingCartIcon />
+                    {/* {iflog?  */}
+                    <Badge badgeContent={badgeNum} color="secondary">
+                      <ShoppingCartIcon />
+                    </Badge>
+                    {/* :<ShoppingCartIcon />} */}
               </IconButton>
               <Dialog 
                 open={openCart} 
@@ -112,12 +137,38 @@ const NavBar = ({open, setOpen}) => {
                 >
                 <CartInclude open={openCart} setOpen={setOpenCart} />
               </Dialog>
+              <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={()=>{handleLogin()}}
+                    color="inherit"
+                  >
+                    <AccountCircleIcon />
+              </IconButton>
+              {iflog? 
+              <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={()=>{
+                      setIflog(false);
+                      setIsManager(false);
+                      setBadgeNum(0);
+                      navigate("/login");
+                    }}
+                    color="inherit"
+                  >
+                    <LogoutIcon />
+              </IconButton>:<></>}
             </Fragment>
           </Toolbar>
         </AppBar>
       </Box>
-      <BarDrawer open={open} setOpen={setOpen} theme={theme} />
-      </>
+      <BarDrawer open={open} setOpen={setOpen} theme={theme1} />
+      </ThemeProvider>
     )
 }
 

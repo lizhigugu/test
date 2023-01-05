@@ -3,11 +3,10 @@ import {useState, useEffect} from "react";
 
 //mui import 
 import Button from '@mui/material/Button';
-import TextField, { textFieldClasses } from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import dayjs from 'dayjs';
 import { MenuItem, Box, Divider, IconButton} from "@mui/material";
@@ -19,29 +18,7 @@ import OptionTextField from "./OptionTextField";
 //hook import 
 import useBackend from "../../containers/hooks/useBackend";
 import { Typography } from "antd";
-import PostAdd from "@mui/icons-material/PostAdd";
 import { useWebsite } from "../../containers/hooks/WebsiteContext";
-
-//test const define
-const category = [
-    {
-        value: "spring",
-        label: "spring"
-    },
-    {
-        value: "Summer",
-        label: "summer"
-    },
-    {
-        value: "Winter",
-        label: "winter"
-    },
-    {
-        value: "Autumn",
-        label: "autumn"
-    }
-]
-
 
 //functional component
 const UpdateProductForm = ({ind}) => {
@@ -117,7 +94,7 @@ const UpdateProductForm = ({ind}) => {
             URL: photoURL,
             price: price,
             note: note,
-            product_type: type,
+            product_type: (type==="true"),
             option_type: optionNum,
             options: ops
         }
@@ -280,7 +257,9 @@ const UpdateProductForm = ({ind}) => {
             </DialogContent>
             <DialogActions>
             <Button onClick={()=>{Cancel()}}>取消</Button>
-            <Button onClick={()=>{onAddProduct()}}>更新</Button>
+            <Button 
+                disabled={!name || !whichCategory || !photoURL  || !price || (optionNum && !options)}
+                onClick={()=>{onAddProduct()}}>更新</Button>
             </DialogActions>
         </Dialog>
         </Box>

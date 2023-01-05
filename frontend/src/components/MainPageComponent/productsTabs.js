@@ -15,7 +15,6 @@ import Grid from "@mui/material/Grid";
 import ProductCard from "./ProductCard";
 
 // test data import 
-import Products from "../../test datas/Products";
 
 function ProductsTabs() {
   const { categories, products } = useWebsite();
@@ -53,18 +52,21 @@ function ProductsTabs() {
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example" variant="fullWidth">
-            <Tab label='all' value='all'/>
+          <TabList 
+            onChange={handleChange} 
+            aria-label="lab API tabs example" 
+            variant="fullWidth"
+            indicatorColor="secondary">
+            <Tab label='all' value='all'  />
             {categories.map((label,index)=>(<Tab label={label} value={label} key={index}/>))}
           </TabList>
         </Box>
-  {/*the "all" tab*/}
         <TabPanel value='all' key='all'>
           <Grid container key='all'>
                 <Box
                   sx={{
                     p: 2,
-                    bgcolor: 'background.default',
+                    bgcolor: '',
                     display: 'grid',
                     gridTemplateColumns: { md: '1fr 1fr 1fr' },
                     gap: 2,
@@ -72,30 +74,30 @@ function ProductsTabs() {
                 </Box>
             </Grid>
             {products.length?
-              (<Grid container key="1">
+              (<Grid container key="0">
                 <Box
                   sx={{
                     p: 2,
-                    bgcolor: 'background.default',
+                    
                     display: 'grid',
                     gridTemplateColumns: { md: '1fr 1fr 1fr' },
                     gap: 2,
                   }}>
                     {products.map((value,index)=>(
-                      <Grid item>
-                        <ProductCard item={value} key={index} />
+                      <Grid item key={index}>
+                        <ProductCard item={value}  />
                       </Grid>))}
                 </Box>
-              </Grid>):<p>No product in this category : /</p>}
+              </Grid>):<p></p>}
         </TabPanel>
   {/*end of the "all" tab*/}
         {categories.map((label, index)=>(
-          <TabPanel value={label} key={index}>
+          <TabPanel value={label} key={index+1}>
             <Grid container key={index}>
                 <Box
                   sx={{
                     p: 2,
-                    bgcolor: 'background.default',
+                   
                     display: 'grid',
                     gridTemplateColumns: { md: '1fr 1fr 1fr' },
                     gap: 2,
@@ -103,21 +105,21 @@ function ProductsTabs() {
                 </Box>
             </Grid>
             {products.length?
-              (<Grid container key="1">
+              (<Grid container key="100000">
                 <Box
                   sx={{
                     p: 2,
-                    bgcolor: 'background.default',
+                    
                     display: 'grid',
                     gridTemplateColumns: { md: '1fr 1fr 1fr' },
                     gap: 2,
                   }}>
                     {products.map((value,index)=>(
-                      <Grid item>
-                        <ProductCard item={value} key={index} />
+                      <Grid item key={index} >
+                        <ProductCard item={value} />
                       </Grid>))}
                 </Box>
-              </Grid>):<p>No product in this category : /</p>}
+              </Grid>):<p></p>}
         </TabPanel>))}
       </TabContext>
     </Box>

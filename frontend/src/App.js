@@ -4,14 +4,13 @@ import './App.css';
 
 // Container Import
 import MainPage from './containers/MainPage';
-import TestPage from "./containers/testPage";
 import ProductPage from "./components/ProductPage";
-import CartList from './components/CartList';
 import PersonalPage from "./containers/PersonalPage";
 import BillPage from "./containers/BillPage";
 import ManagerPage from "./containers/ManagerPage";
 import CheckPage from "./containers/CheckPage";
 import Login from "./containers/Login";
+import UseLogin from "./containers/useLogin";
 
 // Bar Component Import
 import NavBar from "./components/BarComponent/NavBar";
@@ -21,14 +20,22 @@ import {Main, DrawerHeader} from "./components/BarComponent/barPositionHandler";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 // Provider import
-import {WebsiteProvider} from './containers/hooks/WebsiteContext'
+
+// mui import
+import { ThemeProvider } from "@mui/material";
+import { useWebsite } from "./containers/hooks/WebsiteContext";
+
+//theme import
+import theme from "./theme";
+
 function App() {
   // set state
   const [open, setOpen] = useState(false);
+  const {iflog, isManager} = useWebsite();
 
   return (
-    
-    <WebsiteProvider>
+    <ThemeProvider theme={theme}>
+    {/* <WebsiteProvider> */}
     <Router>
       <NavBar open={open} setOpen={setOpen}/>
       <Main open={open}>
@@ -36,18 +43,17 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<MainPage />} />
-          <Route path="/check" element={<CheckPage />} />
-          <Route path="/personal" element={<PersonalPage />} />
-          <Route path="/personal/bills" element={<BillPage />} />
-          <Route path="/test" element={<TestPage />} />
-          <Route path="/product" element={<ProductPage />} />
-          <Route path="/cartlist" element={<CartList />} />
-          <Route path="/manager" element={<ManagerPage />} />
+          <Route path="/check" element={iflog? <CheckPage />:<Login />} />
+          <Route path="/personal" element={iflog? <PersonalPage />:<Login />} />
+          <Route path="/personal/bills" element={iflog? <BillPage />:<Login />} />
+          <Route path="/manager" element={(iflog && isManager)? <ManagerPage />:<Login />} />
+          <Route path="/forlogin" element={<UseLogin />} />
         </Routes>
         </DrawerHeader>
       </Main>
     </Router>
-    </WebsiteProvider>
+    {/* </WebsiteProvider> */}
+    </ThemeProvider>
   );
 }
 

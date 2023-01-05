@@ -8,10 +8,10 @@ import Box from "@mui/material/Box";
 import { Typography, Card, CardContent, IconButton, Toolbar } from "@mui/material";
 
 //mui icon import
-import EditIcon from '@mui/icons-material/Edit';
+// import EditIcon from '@mui/icons-material/Edit';
 
 //test data import 
-import User from "../test datas/User";
+// import User from "../test datas/User";
 
 //form component import
 import UpdateUserForm from '../components/PersonalComponent/UpdateUserForm';

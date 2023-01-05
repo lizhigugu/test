@@ -1,39 +1,34 @@
 //react import
 
 //mui import 
-import {Card, Grid, Typography, CardContent, Box, Button, IconButton} from "@mui/material";
+import {Card, Grid, Typography, CardContent, Box, IconButton} from "@mui/material";
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import EditIcon from '@mui/icons-material/Edit';
+// import EditIcon from '@mui/icons-material/Edit';
 
 //component import
 import Receipt from "../PersonalComponent/Receipt";
 import TimeLine from "../PersonalComponent/TimeLine";
 
 //import hooks
-import { useEffect } from 'react'; 
-import useBackend from "../../containers/hooks/useBackend";
 import { useWebsite } from "../../containers/hooks/WebsiteContext";
+import useBackend from "../../containers/hooks/useBackend";
 
 //functional component
 const ManageBill = ({item}) => {
     //set state
+    const {UpdateBillStatus} = useBackend();
 
     //fetch backend data
-    const {UpdateBillStatus, ConfirmBill} = useBackend();
 
     //function define
-    const handleEdit = () => {
-        console.log("handle edit")
-    }
-
     const handleStateForward = () => {
-        console.log("handle change state", item.status, item.billId);
+        // console.log("handle change state", item.status, item.billId);
         UpdateBillStatus('add',item.billId,item.status);
     }
 
     const handleStateBackward = () => {
-        console.log("handle backward")
+        // console.log("handle backward")
         UpdateBillStatus('minus',item.billId,item.status);
     }
 
@@ -48,7 +43,7 @@ const ManageBill = ({item}) => {
             }}>
                 <Grid container direction="row" justifyContent="space-between">
                     <Typography variant="h6" component="div">
-                        訂單編號：{item.userLineId}
+                        訂單編號：{item.billId}
                     </Typography>
                     <Grid item>
                         <IconButton
@@ -59,11 +54,6 @@ const ManageBill = ({item}) => {
                             onClick={()=>{handleStateForward()}}>
                             <ArrowRightIcon />
                         </IconButton>
-                        {/* <UpdateBillForm /> */}
-                        {/* <IconButton
-                            onClick={()=>{handleEdit()}}>
-                            <EditIcon />
-                        </IconButton> */}
                     </Grid>
                 </Grid>
                 <Box sx={{
@@ -101,12 +91,16 @@ const ManageBill = ({item}) => {
                             <Typography variant="body2" component="div">
                                 包裝方式：{item.package}
                             </Typography>
+                            {item.caption?
+                            <Typography variant="body2" component="div">
+                                包裝方式：{item.caption}
+                            </Typography>:<></>}
                             <Typography variant="body2" component="div" sx={{
                                 width: "100%",
                                 display: "grid",
                                 gridTemplateColumns: "1fr 1fr"
                                 }}>
-                                地址：{item.address}
+                                地址：{item.address.substring(0,6)}
                             </Typography>
                         </Box>
                     </Box>

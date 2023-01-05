@@ -8,14 +8,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
-import InfoIcon from '@mui/icons-material/Info';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import HelpIcon from '@mui/icons-material/Help';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import PersonIcon from '@mui/icons-material/Person';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import { ThemeProvider } from '@emotion/react';
 
 
 // navigation import 
@@ -45,14 +43,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 // function component
 const BarDrawer = ({open, setOpen, theme}) => {
     //hook import
-    const {isManager} = useWebsite();
+    const {isManager, iflog} = useWebsite();
 
     //set state
 
     //function define
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
     
     const handleDrawerClose = () => {
         setOpen(false);
@@ -75,11 +70,12 @@ const BarDrawer = ({open, setOpen, theme}) => {
 
     //useEffect
     useEffect(()=>{
-      console.log("in barDrawer: ", isManager);
+      // console.log("in barDrawer: ", isManager);
     }, [isManager])
 
     //return
     return(
+      <ThemeProvider theme={theme}>
         <Drawer
         sx={{
           width: drawerWidth,
@@ -108,7 +104,7 @@ const BarDrawer = ({open, setOpen, theme}) => {
               <ListItemText primary={"首頁"} />
             </ListItemButton>
           </ListItem>
-          <ListItem key={"基本資料"} disablePadding onClick={()=>{navigateToPersonal()}}>
+          <ListItem key={"基本資料"} disablePadding onClick={()=>{navigateToPersonal()}} disabled={!iflog}>
                 <ListItemButton>
                   <ListItemIcon>
                     <PersonIcon />
@@ -116,7 +112,7 @@ const BarDrawer = ({open, setOpen, theme}) => {
                   <ListItemText primary={"基本資料"} />
                 </ListItemButton>
               </ListItem>
-              <ListItem key={"我的訂單"} disablePadding onClick={()=>{navigateToBill()}}>
+              <ListItem key={"我的訂單"} disablePadding onClick={()=>{navigateToBill()}} disabled={!iflog}>
                 <ListItemButton>
                   <ListItemIcon>
                     <ReceiptIcon />
@@ -137,6 +133,7 @@ const BarDrawer = ({open, setOpen, theme}) => {
             </ListItem>
         </List>):<></>}
       </Drawer>
+      </ThemeProvider>
     )
 }
 

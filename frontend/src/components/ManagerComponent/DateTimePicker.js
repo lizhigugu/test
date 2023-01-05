@@ -5,7 +5,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 //react import
-import {useState} from "react";
 
 function BasicDateTimePicker({date, setDate}) {
 
