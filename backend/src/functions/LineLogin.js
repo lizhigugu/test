@@ -11,7 +11,7 @@ const sendData = (data, ws) =>{
 
 const loginLine = async (input, ws) => {
     console.log("in loginLine");
-    const feedback = await axios({
+    const feedback = axios({
         method: 'post',
         url: 'https://api.line.me/oauth2/v2.1/token',
         data: {
