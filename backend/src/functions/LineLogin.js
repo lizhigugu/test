@@ -24,7 +24,7 @@ const loginLine = async (input, ws) => {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
-    }).then(res => res.data);
+    }).then(res => res.data, console.log(res.data));
 
     function delay(time){
         return new Promise(resolve => setTimeout(resolve,time))
