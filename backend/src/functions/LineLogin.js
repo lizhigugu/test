@@ -18,7 +18,7 @@ const loginLine = async (input, ws) => {
             url: 'https://api.line.me/oauth2/v2.1/token',
             data: {
                 grant_type: 'authorization_code',
-                code: callback,
+                code: callback(),
                 redirect_uri: 'https://test-production-fc86.up.railway.app/login',
                 client_id: '1657771320',
                 client_secret: '87e9ecd48401b88aa9feab300724ea3a'
