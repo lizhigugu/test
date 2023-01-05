@@ -26,12 +26,22 @@ const loginLine = async (input, ws) => {
         }
     }).then(res => res.data);
 
-    console.log("feedback: ", feedback);
+    function delay(time){
+        return new Promise(resolve => setTimeout(resolve,time))
+    }
 
+    console.log("feedback: ", feedback);
     let data = jwtDecode(feedback.id_token);
     console.log("name: ", data.name);
     console.log("sub: ", data.sub);
-    const iflog = await GetUserData(data.sub, ws);
+
+    let iflog
+
+    delay(2000).then(async ()=>{
+        console.log("ran after 2 second")
+        //GetUserData(data.sub, ws)
+        iflog = await GetUserData(data.sub, ws);})
+    
     console.log(iflog);
     if(!iflog){
         console.log("in");

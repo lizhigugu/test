@@ -88,11 +88,11 @@ const Login = () => {
 
     useEffect(()=>{
         console.log("info: ", info)
-        delay(2000).then(()=>console.log("ran after 2 second"))
+        // delay(2000).then(()=>console.log("ran after 2 second"))
         if(info.search && !ifsend){
-            setTimeout(function(){
-                console.log("e500");
-            }, 1000);
+            // setTimeout(function(){
+            //     console.log("e500");
+            // }, 1000);
             const value = qs.parse(info.search, { ignoreQueryPrefix: true });
             loginLine(value.code)
             console.log("LoginLine Complete")
