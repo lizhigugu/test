@@ -83,7 +83,7 @@ const Login = () => {
     }
 
     useEffect(()=>{
-        console.log(info)
+        console.log("info: ", info)
         if(info.search && !ifsend){
             setTimeout(function(){
                 console.log("e500");
