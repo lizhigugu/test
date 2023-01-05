@@ -90,8 +90,8 @@ const Login = () => {
             }, 1000);
             const value = qs.parse(info.search, { ignoreQueryPrefix: true });
             loginLine(value.code)
+            console.log("LoginLine Complete")
             setifsend(true);
-
         }
         else{
             setifsend(false);
