@@ -30,22 +30,22 @@ const appendProduct = (category, product) => {
     })
 }
 
-const AddUser = (User, ws)=>{
-    UserModel.find({lineId:User.lineId}, async function(err, obj){
+const AddUser = (callback, ws)=>{
+    UserModel.find({lineId:callback.lineId}, async function(err, obj){
         if(obj.length){
             //console.log('This LineId has already registered.');
         }
         else{
             //console.log('registering new user...');
             await new UserModel({
-                name:       User.name,
-                lineId:     User.lineId,
+                name:       callback.name,
+                lineId:     callback.lineId,
                 address:    "",
                 phoneNumber:"",
             }).save();
             const newuser={
-                name: User.name,
-                lineId: User.lineId,
+                name: callback.name,
+                lineId: callback.lineId,
                 address: "",
                 phoneNumber: ""
             }

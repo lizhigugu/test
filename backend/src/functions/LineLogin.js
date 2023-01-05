@@ -11,43 +11,40 @@ const sendData = (data, ws) =>{
 
 const loginLine = async (input, ws) => {
     console.log("in loginLine");
-    const feedback = axios({
-        method: 'post',
-        url: 'https://api.line.me/oauth2/v2.1/token',
-        data: {
-            grant_type: 'authorization_code',
-            code: input,
-            redirect_uri: 'https://test-production-fc86.up.railway.app/login',
-            client_id: '1657771320',
-            client_secret: '87e9ecd48401b88aa9feab300724ea3a'
-        },
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    }).then(res => res.data, console.log(res.data));
 
-    function delay(time){
-        return new Promise(resolve => setTimeout(resolve,time))
+    const fb= async (callback)=>{
+        const feedback = await axios({
+            method: 'post',
+            url: 'https://api.line.me/oauth2/v2.1/token',
+            data: {
+                grant_type: 'authorization_code',
+                code: callback,
+                redirect_uri: 'https://test-production-fc86.up.railway.app/login',
+                client_id: '1657771320',
+                client_secret: '87e9ecd48401b88aa9feab300724ea3a'
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(res => res.data);
+        let data = jwtDecode(feedback.id_token);
+        return({
+            name: data.name,
+            lineId: data.sub
+        })
     }
 
-    console.log("feedback: ", feedback);
-    let data = jwtDecode(feedback.id_token);
-    console.log("name: ", data.name);
-    console.log("sub: ", data.sub);
+    console.log("in");
+    AddUser(fb(input), ws);
+    GetUserData(fb(input).lineId, ws)
 
-    let iflog
-
-    delay(2000).then(async ()=>{
-        console.log("ran after 2 second")
-        //GetUserData(data.sub, ws)
-        iflog = await GetUserData(data.sub, ws);})
-    
-    console.log(iflog);
-    if(!iflog){
-        console.log("in");
-        AddUser({name: data.name, lineId: data.sub}, ws);
-        GetUserData(data.sub, ws)
-    };
+    //console.log("feedback: ", feedback);
+    // console.log("name: ", data.name);
+    // console.log("sub: ", data.sub);
+    // //const iflog = await GetUserData(data.sub, ws);
+    // //console.log(iflog);
+    // if(!iflog){
+    // };
 
 }
 

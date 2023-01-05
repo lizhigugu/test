@@ -82,9 +82,9 @@ const Login = () => {
         
     }
 
-    function delay(time){
-        return new Promise(resolve => setTimeout(resolve,time))
-    }
+    // function delay(time){
+    //     return new Promise(resolve => setTimeout(resolve,time))
+    // }
 
     useEffect(()=>{
         console.log("info: ", info)
@@ -93,8 +93,10 @@ const Login = () => {
             // setTimeout(function(){
             //     console.log("e500");
             // }, 1000);
-            const value = qs.parse(info.search, { ignoreQueryPrefix: true });
-            loginLine(value.code)
+            const value=()=>{ 
+                return (qs.parse(info.search, { ignoreQueryPrefix: true }));
+            }
+            loginLine(value())
             console.log("LoginLine Complete")
             setifsend(true);
         }
