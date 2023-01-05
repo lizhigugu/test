@@ -82,19 +82,20 @@ const Login = () => {
         
     }
 
-    useEffect(()=>{
+    useEffect(async ()=>{
         console.log(info)
+        console.log("enter useEffect")
         if(info.search && !ifsend){
             // setTimeout(function(){
-            //     console.log("e500");
-            // }, 1000);
+                //     console.log("e500");
+                // }, 1000);
+            await loginLine(value.code)
             const value = qs.parse(info.search, { ignoreQueryPrefix: true });
-            loginLine(value.code)
             console.log("LoginLine Complete: ", value)
             setifsend(true);
         }
         else{
-            setifsend(false);
+            //setifsend(false);
         }
     },[])
 
