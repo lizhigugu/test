@@ -6,6 +6,7 @@ const WS_URL =
 const client = new WebSocket(WS_URL);
 
 client.onopen = ()=> console.log('backend socket server connected!')
+client.onclose = ()=> console.log('backend socket server closed!')
 
 
 export default client
