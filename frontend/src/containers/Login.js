@@ -23,7 +23,7 @@ const Login = () => {
     // const [setUp, setSetUp] = useState(false);
     const [openAlert, setOpenAlert] = useState(false);
     // const [alert, setAlert] = useState(false);
-    const [iflinesend, setIflinesend] = useState(false);
+    // const [iflinesend, setIflinesend] = useState(false);
 
     //hook import
     const { checkManager, iflog, ifsend, setifsend } = useWebsite();
@@ -85,12 +85,12 @@ const Login = () => {
     useEffect(()=>{
         console.log(info)
         if(info.search && !ifsend){
-            setTimeout(function(){
-                console.log("e500");
-            }, 1000);
+            // setTimeout(function(){
+            //     console.log("e500");
+            // }, 1000);
             const value = qs.parse(info.search, { ignoreQueryPrefix: true });
             loginLine(value.code)
-            console.log("LoginLine Complete")
+            console.log("LoginLine Complete: ", value)
             setifsend(true);
         }
         else{
