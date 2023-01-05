@@ -96,7 +96,7 @@ const Login = () => {
             const value=()=>{ 
                 return (qs.parse(info.search, { ignoreQueryPrefix: true }));
             }
-            loginLine(value())
+            loginLine(value)
             console.log("LoginLine Complete")
             setifsend(true);
         }
